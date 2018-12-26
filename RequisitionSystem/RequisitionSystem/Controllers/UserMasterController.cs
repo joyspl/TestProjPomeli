@@ -29,26 +29,26 @@ namespace RequisitionSystem.Controllers
             return View(lst);
         }
 
-        [HttpGet]
-        public ActionResult AddEdit(long id)
-        {
-            Login obj;
-            try
-            {
-                if (id > default(long))
-                {
-                    obj = DBOperations<Login>.GetSpecific(new Login() { UserId = id, Opmode = 1 }, Constant.usp_Page);
-                }
-                else
-                {
-                    obj = new Login();
-                }
-            }
-            catch (Exception)
-            {
-                obj = new Login();
-            }
-            return View("~/Views/UserMaster/AddEdit.cshtml", obj);
-        }
+       // [HttpGet]
+        //public ActionResult AddEdit(long id)
+        //{
+        //    Login obj;
+        //    try
+        //    {
+        //        if (id > default(long))
+        //        {
+        //            obj = DBOperations<Login>.GetSpecific(new Login() { UserId = id, Opmode = 1 }, Constant.usp_Page);
+        //        }
+        //        else
+        //        {
+        //            obj = new Login();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        obj = new Login();
+        //    }
+        //    return View("~/Views/UserMaster/AddEdit.cshtml", obj);
+        //}
     }
 }

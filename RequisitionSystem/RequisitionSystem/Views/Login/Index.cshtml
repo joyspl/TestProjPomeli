@@ -80,12 +80,16 @@
 
                 if (data.Success == 1) {
 
-                    if(data.Role == 1) // admin user
+                    if(data.Role == 1) // admin user . Now circle user
                      {
-                        window.location.href = "@Url.Action("Index", "UserMaster", new { area = "" })";
+                        window.location.href = "@Url.Action("Index", "CircleProfile", new { area = "" })";
+                    }
+                    else if(data.Role == 2) // district
+                    {
+                        window.location.href = "@Url.Action("Index", "DistrictProfile", new { area = "" })";
                     }
                     else {
-                        window.location.href = "@Url.Action("Index", "Requisition", new { area = "" })";
+                        window.location.href = "@Url.Action("Index", "UserProfile", new { area = "" })";
                     }
                     
             }

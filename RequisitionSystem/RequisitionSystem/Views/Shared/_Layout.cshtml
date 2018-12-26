@@ -64,7 +64,19 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            @if (GlobalSettings.oUserMaster.UserRole == 1) // circle
+                            {
+                                <a href="@(Url.Action("Index", "CircleProfile", new { area = "" }))"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            }
+                            else if (GlobalSettings.oUserMaster.UserRole == 2) // district
+                            {
+                                <a href="@(Url.Action("Index", "DistrictProfile", new { area = "" }))"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            }
+                            else
+                            {
+                                <a href="@(Url.Action("Index", "UserProfile", new { area = "" }))"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            }
+                            
                         </li>
                        
                         <li class="divider"></li>
