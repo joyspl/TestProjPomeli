@@ -15,5 +15,9 @@ using System.Web;
         public string CirclePin { get; set; }
         public string AlterMobile { get; set; }
         public string PoliceStation { get; set; }
+        public long UserId { get; set; }
+        public string FullName { get; set; }
+        public string MobileNo { get; set; }
+        public string EmailId { get; set; }
         public int Opmode { get; set; }
     }

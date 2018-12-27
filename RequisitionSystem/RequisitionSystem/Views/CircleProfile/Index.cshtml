@@ -21,7 +21,8 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-
+                            <input type="hidden" id="UserId" value="@GlobalSettings.oUserMaster.UserId"/>
+                            <input type="hidden" id="CircleMasterId" value="@GlobalSettings.oUserMaster.RefId" />
                             <div class="form-group">
                                 <label>UserName</label>
                                 <input class="form-control" id="UserName" value="@GlobalSettings.oUserMaster.UserName" disabled>
@@ -30,55 +31,60 @@
 
                             <div class="form-group">
                                 <label>Full Name</label>
-                                <input class="form-control" placeholder="Full Name" id="FullName" value="@GlobalSettings.oUserMaster.FullName">
+                                <input type="text" class="form-control" placeholder="Full Name" id="FullName" value="@GlobalSettings.oUserMaster.FullName">
                             </div>
 
                             <div class="form-group">
                                 <label>Mobile No.</label>
-                                <input class="form-control" placeholder="Mobile No." id="MobileNo" value="@GlobalSettings.oUserMaster.MobileNo">
+                                <input type="text" class="form-control" placeholder="Mobile No." id="MobileNo" value="@GlobalSettings.oUserMaster.MobileNo" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="validate_numeric(event)">
                             </div>
 
                             <div class="form-group">
                                 <label>Email Id</label>
-                                <input class="form-control" placeholder="Email Id" id="EmailId" value="@GlobalSettings.oUserMaster.EmailId">
+                                <input type="text" class="form-control" placeholder="Email Id" id="EmailId" value="@GlobalSettings.oUserMaster.EmailId">
                             </div>
 
                             <div class="form-group">
                                 <label>Circle Code</label>
-                                <input class="form-control" id="UserName" value="@Model.CircleCode" >
+                                <input type="text" class="form-control" id="CircleCode" value="@Model.CircleCode">
 
                             </div>
                             <div class="form-group">
                                 <label>Circle Name</label>
-                                <input class="form-control" id="UserName" value="@Model.CircleName">
+                                <input type="text" class="form-control" id="CircleName" value="@Model.CircleName">
 
                             </div>
 
                             <div class="form-group">
                                 <label>Circle Officer Name</label>
-                                <input class="form-control" id="UserName" value="@Model.CircleOfficerName">
+                                <input type="text" class="form-control" id="CircleOfficerName" value="@Model.CircleOfficerName">
 
                             </div>
 
                             <div class="form-group">
                                 <label>Circle Address</label>
-                                <input class="form-control" id="UserName" value="@Model.CircleAddress">
+                                <textarea class="form-control" id="CircleAddress">@Model.CircleAddress</textarea>
 
                             </div>
                             <div class="form-group">
                                 <label>Circle Pin Code</label>
-                                <input class="form-control" id="UserName" value="@Model.CirclePin">
+                                <input type="text" class="form-control" id="CirclePin" value="@Model.CirclePin" maxlength="6" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="validate_numeric(event)">
 
                             </div>
                             <div class="form-group">
                                 <label>Alternate Mobile</label>
-                                <input class="form-control" id="UserName" value="@Model.AlterMobile">
+                                <input type="text" class="form-control" id="AlterMobile" value="@Model.AlterMobile" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="validate_numeric(event)">
 
                             </div>
                             <div class="form-group">
                                 <label>Police Station</label>
-                                <input class="form-control" id="UserName" value="@Model.PoliceStation">
+                                <input type="text" class="form-control" id="PoliceStation" value="@Model.PoliceStation">
 
+                            </div>
+
+                            <div style="text-align:center;">
+                                <button type="submit" class="btn btn-success" id="savebtn">Submit</button> &nbsp;
+                                <button type="reset" class="btn btn-primary">Reset</button>
                             </div>
 
 
@@ -101,4 +107,77 @@
     <!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
-    </div>
+ </div>
+
+<script src="@Url.Content("~/js/jquery.min.js")"></script>
+<script>
+    function validate_numeric(e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            e.preventDefault();
+        }
+    }
+    function emailvalidate(e) {
+        var b = /^[^@@\s]+@@[^@@\.\s]+(\.[^@@\.\s]+)+$/;
+        return b.test(e);
+    }
+    
+
+    $(document).off("click", "#savebtn").on("click", "#savebtn", function (e) {
+
+        var jsonData = new Object();
+        jsonData.UserId = ($("#UserId").val() * 1);
+        jsonData.CircleMasterId = ($("#CircleMasterId").val() * 1);
+        jsonData.FullName = ($("#FullName").val().trim());
+        jsonData.MobileNo = ($("#MobileNo").val().trim());
+        jsonData.EmailId = ($("#EmailId").val().trim());
+        jsonData.CircleCode = ($("#CircleCode").val().trim());
+        jsonData.CircleName = ($("#CircleName").val().trim());
+        jsonData.CircleOfficerName = ($("#CircleOfficerName").val().trim());
+        jsonData.CircleAddress = ($("#CircleAddress").val().trim());
+        jsonData.CirclePin = ($("#CirclePin").val().trim());
+        jsonData.AlterMobile = ($("#AlterMobile").val().trim());
+        jsonData.PoliceStation = ($("#PoliceStation").val().trim());
+
+        var emailchk = emailvalidate($("#EmailId").val().trim());
+
+        if ($("#FullName").val().trim() == "" || $("#MobileNo").val().trim() == "" || $("#EmailId").val().trim() == "") {
+            alert("Please fill all details");
+        }
+        else if (emailchk == false) {
+            alert("Please give proper Email Id");
+        }
+        else if ($("#MobileNo").val().trim().length != 10) {
+            alert("Please give proper Mobile No");
+        }
+        else if ($("#CirclePin").val().trim().length != 6) {
+            alert("Please give proper Circle Pin Code");
+        }
+        else if ($("#AlterMobile").val().trim().length != 10) {
+            alert("Please give proper Alternate Mobile No");
+        }
+        
+        else {
+
+            $.ajax({
+                url: "@Url.Action("UpdateProfile", "CircleProfile", new { area = "" })",
+                type: "POST",
+                data: JSON.stringify(jsonData),
+                contentType: "application/json"
+
+            }).done(function (data) {
+
+                if (data.Success > 0) {
+                    alert(data.Message);
+                    window.location.href = "@Url.Action("Index", "CircleProfile", new { area = "" })";
+                }
+                else {
+                    alert(data.Message);
+                }
+            });
+
+        }
+
+
+    });
+</script>
+

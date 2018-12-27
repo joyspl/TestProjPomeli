@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DistrictProfile
+@{
     ViewBag.Title = "User Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -23,11 +24,18 @@
                             <input type="hidden" id="UserId" value="@GlobalSettings.oUserMaster.UserId" />
 
                             <div class="form-group">
+                                <label>District Name</label>
+                                <input class="form-control" id="UserName" value="@Model.DIstrictName" disabled>
+
+                            </div>
+
+
+                            <div class="form-group">
                                 <label>UserName</label>
                                 <input class="form-control" id="UserName" value="@GlobalSettings.oUserMaster.UserName" disabled>
 
                             </div>
-                           
+
                             <div class="form-group">
                                 <label>Full Name</label>
                                 <input type="text" class="form-control" placeholder="Full Name" id="FullName" value="@GlobalSettings.oUserMaster.FullName">
@@ -40,17 +48,17 @@
 
                             <div class="form-group">
                                 <label>Email Id</label>
-                                <input type="text"  class="form-control" placeholder="Email Id" id="EmailId" value="@GlobalSettings.oUserMaster.EmailId">
+                                <input type="text" class="form-control" placeholder="Email Id" id="EmailId" value="@GlobalSettings.oUserMaster.EmailId">
                             </div>
 
                             <div style="text-align:center;">
                                 <button type="submit" class="btn btn-success" id="savebtn">Submit</button> &nbsp;
                                 <button type="reset" class="btn btn-primary">Reset</button>
                             </div>
-                            
+
 
                             @*<button type="submit" class="btn btn-default">Submit Button</button>
-                            <button type="reset" class="btn btn-default">Reset Button</button>*@
+                                <button type="reset" class="btn btn-default">Reset Button</button>*@
 
                         </div>
                         <!-- /.col-lg-6 (nested) -->
@@ -87,11 +95,11 @@
 
         var jsonData = new Object();
         jsonData.UserId = ($("#UserId").val() * 1);
-        
+
         jsonData.FullName = ($("#FullName").val().trim());
         jsonData.MobileNo = ($("#MobileNo").val().trim());
         jsonData.EmailId = ($("#EmailId").val().trim());
-        
+
 
         var emailchk = emailvalidate($("#EmailId").val().trim());
 
@@ -104,7 +112,7 @@
         else if ($("#MobileNo").val().trim().length != 10) {
             alert("Please give proper Mobile No");
         }
-        
+
 
         else {
 
@@ -118,7 +126,7 @@
 
                 if (data.Success > 0) {
                     alert(data.Message);
-                    window.location.href = "@Url.Action("Index", "UserProfile", new { area = "" })";
+                    window.location.href = "@Url.Action("Index", "DistrictProfile", new { area = "" })";
                 }
                 else {
                     alert(data.Message);
