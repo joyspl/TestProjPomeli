@@ -50,6 +50,16 @@
                                 <label>Email Id</label>
                                 <input type="text" class="form-control" placeholder="Email Id" id="EmailId" value="@GlobalSettings.oUserMaster.EmailId">
                             </div>
+                            <div class="form-group">
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" @(GlobalSettings.oUserMaster.Active == 1 ? "Checked" : "") id="Active">
+                                        Profile Active
+                                    </label>
+                                </div>
+
+                            </div>
 
                             <div style="text-align:center;">
                                 <button type="submit" class="btn btn-success" id="savebtn">Submit</button> &nbsp;
@@ -93,12 +103,21 @@
 
     $(document).off("click", "#savebtn").on("click", "#savebtn", function (e) {
 
+        var ischecked = $("#Active").is(':checked');
+
         var jsonData = new Object();
         jsonData.UserId = ($("#UserId").val() * 1);
 
         jsonData.FullName = ($("#FullName").val().trim());
         jsonData.MobileNo = ($("#MobileNo").val().trim());
         jsonData.EmailId = ($("#EmailId").val().trim());
+
+        if (ischecked == true) {
+            jsonData.Active = 1;
+        }
+        else {
+            jsonData.Active = 0;
+        }
 
 
         var emailchk = emailvalidate($("#EmailId").val().trim());
@@ -111,6 +130,9 @@
         }
         else if ($("#MobileNo").val().trim().length != 10) {
             alert("Please give proper Mobile No");
+        }
+        else if (ischecked == false) {
+            alert("Please check the checkbox");
         }
 
 

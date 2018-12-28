@@ -80,7 +80,7 @@
 
                 if (data.Success == 1) {
 
-                    if(data.Role == 1) // admin user . Now circle user
+                    @*if(data.Role == 1) // admin user . Now circle user
                      {
                         window.location.href = "@Url.Action("Index", "CircleProfile", new { area = "" })";
                     }
@@ -90,7 +90,9 @@
                     }
                     else {
                         window.location.href = "@Url.Action("Index", "UserProfile", new { area = "" })";
-                    }
+                    }*@
+
+                    window.location.href = "@Url.Action("Index", "Dashboard", new { area = "" })";
                     
             }
             else {

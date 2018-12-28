@@ -20,4 +20,5 @@ using System.Web;
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
         public int Opmode { get; set; }
+        public int Active { get; set; }
     }

@@ -29,7 +29,14 @@ namespace RequisitionSystem.Controllers
 
                 result = DBOperations<Login>.DMLOperation(jsonData, Constant.usp_Login);
                 var objLogin = DBOperations<Login>.GetSpecific(new Login() { Opmode = 2, UserId = GlobalSettings.oUserMaster.UserId }, Constant.usp_Login);
-                GlobalSettings.oUserMaster = objLogin;
+                GlobalSettings.oUserMaster.UserId = objLogin.UserId;
+                GlobalSettings.oUserMaster.UserName = objLogin.UserName;
+                GlobalSettings.oUserMaster.FullName = objLogin.FullName;
+                GlobalSettings.oUserMaster.UserRole = objLogin.UserRole;
+                GlobalSettings.oUserMaster.RefId = objLogin.RefId;
+                GlobalSettings.oUserMaster.MobileNo = objLogin.MobileNo;
+                GlobalSettings.oUserMaster.EmailId = objLogin.EmailId;
+                GlobalSettings.oUserMaster.Active = objLogin.Active;
 
                 if (result > 0)
                 {

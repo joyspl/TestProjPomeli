@@ -23,6 +23,13 @@
                         <div class="col-lg-12">
                             <input type="hidden" id="UserId" value="@GlobalSettings.oUserMaster.UserId"/>
                             <input type="hidden" id="CircleMasterId" value="@GlobalSettings.oUserMaster.RefId" />
+
+                            <div class="form-group">
+                                <label>District Name</label>
+                                <input class="form-control" id="DIstrictName" value="@GlobalSettings.oUserMaster.DIstrictName" disabled>
+
+                            </div>
+
                             <div class="form-group">
                                 <label>UserName</label>
                                 <input class="form-control" id="UserName" value="@GlobalSettings.oUserMaster.UserName" disabled>
@@ -82,6 +89,17 @@
 
                             </div>
 
+                            <div class="form-group">
+                     
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" @(GlobalSettings.oUserMaster.Active == 1 ? "Checked" : "") id="Active">
+                                        Profile Active
+                                    </label>
+                                </div>
+
+                            </div>
+
                             <div style="text-align:center;">
                                 <button type="submit" class="btn btn-success" id="savebtn">Submit</button> &nbsp;
                                 <button type="reset" class="btn btn-primary">Reset</button>
@@ -124,6 +142,8 @@
 
     $(document).off("click", "#savebtn").on("click", "#savebtn", function (e) {
 
+        var ischecked= $("#Active").is(':checked');
+
         var jsonData = new Object();
         jsonData.UserId = ($("#UserId").val() * 1);
         jsonData.CircleMasterId = ($("#CircleMasterId").val() * 1);
@@ -138,9 +158,20 @@
         jsonData.AlterMobile = ($("#AlterMobile").val().trim());
         jsonData.PoliceStation = ($("#PoliceStation").val().trim());
 
+        if (ischecked == true)
+        {
+            jsonData.Active = 1;
+        }
+        else {
+            jsonData.Active = 0;
+        }
+        
+
         var emailchk = emailvalidate($("#EmailId").val().trim());
 
-        if ($("#FullName").val().trim() == "" || $("#MobileNo").val().trim() == "" || $("#EmailId").val().trim() == "") {
+        if ($("#FullName").val().trim() == "" || $("#MobileNo").val().trim() == "" || $("#EmailId").val().trim() == "" || $("#CircleCode").val().trim() == ""
+            || $("#CircleName").val().trim() == "" || $("#CircleOfficerName").val().trim() == "" || $("#CircleAddress").val().trim() == ""
+            || $("#CirclePin").val().trim() == ""  || $("#PoliceStation").val().trim()=="") {
             alert("Please fill all details");
         }
         else if (emailchk == false) {
@@ -152,8 +183,12 @@
         else if ($("#CirclePin").val().trim().length != 6) {
             alert("Please give proper Circle Pin Code");
         }
-        else if ($("#AlterMobile").val().trim().length != 10) {
+        else if ($("#AlterMobile").val().trim()!="" && $("#AlterMobile").val().trim().length != 10) {
             alert("Please give proper Alternate Mobile No");
+        }
+        else if(ischecked==false)
+        {
+            alert("Please check the checkbox");
         }
         
         else {

@@ -106,14 +106,14 @@ public sealed class GlobalSettings
             HttpContext.Current.Session["pUserName"] = value;
         }
     }
-    public static Login oUserMaster
+    public static UserSec oUserMaster
     {
         get
         {
             if (HttpContext.Current.Session["oUserMaster"] != null)
-                return HttpContext.Current.Session["oUserMaster"] as Login;
+                return HttpContext.Current.Session["oUserMaster"] as UserSec;
             else
-                return new Login();
+                return new UserSec();
         }
         set
         {

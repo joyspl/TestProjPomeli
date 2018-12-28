@@ -27,10 +27,42 @@ namespace MvcApplication1.Controllers
                 obj.UserPassword = password;
                 var objLogin = DBOperations<Login>.GetSpecific(obj, Constant.usp_Login);
 
+                UserSec objsession = new UserSec();
+
                 if (objLogin != null && objLogin.UserPassword == password)
                 {
 
-                    GlobalSettings.oUserMaster = objLogin;
+                    objsession.UserId = objLogin.UserId;
+                    objsession.UserName = objLogin.UserName;
+                    objsession.FullName = objLogin.FullName;
+                    objsession.UserRole = objLogin.UserRole;
+                    objsession.RefId = objLogin.RefId;
+                    objsession.MobileNo = objLogin.MobileNo;
+                    objsession.EmailId = objLogin.EmailId;
+                    objsession.Active = objLogin.Active;
+
+                    if (objLogin.UserRole==1) // circle user
+                    {
+                        var objCircleProfile = DBOperations<CircleProfile>.GetSpecific(new CircleProfile() { Opmode = 0, CircleMasterId = objLogin.RefId }, Constant.usp_CircleProfile);
+                        objsession.CircleMasterId = objCircleProfile.CircleMasterId;
+                        objsession.CircleName = objCircleProfile.CircleName;
+                        objsession.DistrictId = objCircleProfile.DistrictId;
+
+                        var objDistrictProfile = DBOperations<DistrictProfile>.GetSpecific(new DistrictProfile() { Opmode = 0, DistrictId = objCircleProfile.DistrictId }, Constant.usp_DistrictProfile);
+                        objsession.DIstrictName = objDistrictProfile.DIstrictName;
+                    }
+                    if (objLogin.UserRole == 2) // district user
+                    {
+                        var objDistrictProfile = DBOperations<DistrictProfile>.GetSpecific(new DistrictProfile() { Opmode = 0, DistrictId = objLogin.RefId }, Constant.usp_DistrictProfile);
+                        objsession.DistrictId = objDistrictProfile.DistrictId;
+                        objsession.DIstrictName = objDistrictProfile.DIstrictName;
+                        
+                    }
+                    
+
+                    GlobalSettings.oUserMaster = objsession;
+
+                   
 
                 }
                 else
@@ -52,7 +84,7 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Logout()
         {
-            GlobalSettings.oUserMaster = (Login)null;
+            GlobalSettings.oUserMaster = (UserSec)null;
             this.Session.Clear();
             this.Session.Abandon();
             this.Session.RemoveAll();
