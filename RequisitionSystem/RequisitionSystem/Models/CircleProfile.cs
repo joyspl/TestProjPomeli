@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ using System.Web;
         public string CircleName { get; set; }
         public long DistrictId { get; set; }
         public string CircleOfficerName { get; set; }
+       // [Required]
+       // [DisplayFormatAttribute(DataFormatString = "{0:d}")]
         public string CircleAddress { get; set; }
         public string CirclePin { get; set; }
         public string AlterMobile { get; set; }

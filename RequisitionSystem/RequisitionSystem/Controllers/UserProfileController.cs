@@ -38,6 +38,11 @@ namespace RequisitionSystem.Controllers
                 GlobalSettings.oUserMaster.EmailId = objLogin.EmailId;
                 GlobalSettings.oUserMaster.Active = objLogin.Active;
 
+                string EmailMsg = string.Empty;
+                EmailMsg = "Your profile has been updated successfully.<br><br>";
+                EmailMsg += "Regards<br><br>WBTBCL";
+                Utility.SendHtmlFormattedEmail(objLogin.EmailId, "User Profile Update", EmailMsg, false, "");
+
                 if (result > 0)
                 {
                     msg = "Profile updated successfully";
