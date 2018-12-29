@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace RequisitionSystem.Controllers
 {
+    [SessionAuthorize]
     public class UserProfileController : Controller
     {
         //
@@ -39,9 +40,14 @@ namespace RequisitionSystem.Controllers
                 GlobalSettings.oUserMaster.Active = objLogin.Active;
 
                 string EmailMsg = string.Empty;
+                string SMSMsg = string.Empty;
                 EmailMsg = "Your profile has been updated successfully.<br><br>";
-                EmailMsg += "Regards<br><br>WBTBCL";
-                Utility.SendHtmlFormattedEmail(objLogin.EmailId, "User Profile Update", EmailMsg, false, "");
+                EmailMsg += "Mobile No.- " + objLogin.MobileNo;
+                EmailMsg += "<br><br>Regards<br><br>WBTBCL";
+                Utility.SendHtmlFormattedEmail(objLogin.EmailId.Trim(), "User Profile Update", EmailMsg, false, "");
+
+                SMSMsg = "Your profile has been updated successfully. Email Id - " + objLogin.EmailId.Trim();
+                Utility.SendSMS(objLogin.MobileNo.Trim(), SMSMsg);
 
                 if (result > 0)
                 {

@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace RequisitionSystem.Controllers
 {
+    [SessionAuthorize]
     public class DashboardController : Controller
     {
+        
         //
         // GET: /Dashboard/
 

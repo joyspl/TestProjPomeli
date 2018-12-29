@@ -103,6 +103,7 @@
 
     $(document).off("click", "#savebtn").on("click", "#savebtn", function (e) {
 
+        $("#savebtn").prop("disabled", true);
         var ischecked = $("#Active").is(':checked');
 
         var jsonData = new Object();
@@ -153,6 +154,8 @@
                 else {
                     alert(data.Message);
                 }
+            }).always(function (data) {
+                $("#savebtn").prop("disabled", false);
             });
 
         }

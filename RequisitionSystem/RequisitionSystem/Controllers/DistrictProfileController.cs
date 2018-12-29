@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace RequisitionSystem.Controllers
 {
+    [SessionAuthorize]
     public class DistrictProfileController : Controller
     {
         //

@@ -745,7 +745,8 @@ public sealed class Utility
         {
             //1 = sendToPhoneNumber, 3 = MessageBody, 5 = userid, 7 = password, (0, 2, 4, 6, 8, 9, 10 = &)
             //string url = string.Format(ConfigurationManager.AppSettings["SMSGatewayUri"].ToString(), "&", sendToPhoneNumber, "&", encodedSMSBody, "&", ConfigurationManager.AppSettings["SMSGatewayUserID"].ToString(), "&", ConfigurationManager.AppSettings["SMSGatewayPassword"].ToString(), "&", "&", "&");
-            string url = string.Format(ConfigurationManager.AppSettings["SMSGatewayUri"].ToString(), ConfigurationManager.AppSettings["SMSGatewayUserID"], "&", ConfigurationManager.AppSettings["SMSGatewayPassword"], "&", ConfigurationManager.AppSettings["SMSSenderName"], "&", sendToPhoneNumber, "&", encodedSMSBody);
+            //string url = string.Format(ConfigurationManager.AppSettings["SMSGatewayUri"].ToString(), ConfigurationManager.AppSettings["SMSGatewayUserID"], "&", ConfigurationManager.AppSettings["SMSGatewayPassword"], "&", ConfigurationManager.AppSettings["SMSSenderName"], "&", sendToPhoneNumber, "&", encodedSMSBody);
+            string url = "http://api.msg91.com/api/sendhttp.php?country=91&sender="+ConfigurationManager.AppSettings["SMSSenderName"].ToString() + "&route=4&mobiles=" + sendToPhoneNumber + "&authkey=" + ConfigurationManager.AppSettings["SMSAuthKey"].ToString() + "&message=" + messageBody;
             request = WebRequest.Create(url);
 
             //in case u work behind proxy, uncomment the commented code and provide correct details
